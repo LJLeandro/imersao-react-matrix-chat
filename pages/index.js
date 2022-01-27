@@ -4,6 +4,9 @@ import appConfig from '../config.json';
 function GlobalStyle() {
     return (
         <style global jsx>{`
+            @import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,300,400,700);
+
+
             * {
                 margin: 0;
                 padding: 0;
@@ -11,8 +14,8 @@ function GlobalStyle() {
                 list-style: none;
             }
 
-            body {
-                font-family: 'Open Sans' sans-serif;
+            body h1 {
+                font-family: 'Open Sans', sans-serif;
             }
 
             html, body, #__next {
@@ -40,7 +43,7 @@ function Titulo(props){
             <Tag>{props.children}</Tag>
             <style jsx>{`
                 ${Tag} {    
-                    color: ${appConfig.theme.colors.neutrals['600']};
+                    color: ${appConfig.theme.colors.neutrals['100']};
                     font-size: 24px
                     font-weight: 600px
                 }
@@ -65,7 +68,7 @@ function Titulo(props){
 // }
 
 export default function PaginaInicial() {
-    const username = 'peas';
+    const username = 'LJ Leandro';
   
     return (
       <>
@@ -73,13 +76,14 @@ export default function PaginaInicial() {
         <Box
           styleSheet={{
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            backgroundColor: appConfig.theme.colors.primary['050'],
+            backgroundColor: appConfig.theme.colors.primary['100'],
             backgroundImage: 'url(https://images3.alphacoders.com/105/1059632.jpg)',
             backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
           }}
         >
           <Box
             styleSheet={{
+                opacity: 0.85,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
@@ -101,7 +105,7 @@ export default function PaginaInicial() {
                 width: { xs: '100%', sm: '50%' }, textAlign: 'center', marginBottom: '32px',
               }}
             >
-              <Titulo tag="h2">Boas vindas de volta!</Titulo>
+              <Titulo tag="h1">Boas vindas de volta!</Titulo>
               <Text variant="body3" styleSheet={{ marginBottom: '32px', color: appConfig.theme.colors.neutrals[300] }}>
                 {appConfig.name}
               </Text>
@@ -122,7 +126,7 @@ export default function PaginaInicial() {
                 label='Entrar'
                 fullWidth
                 buttonColors={{
-                  contrastColor: appConfig.theme.colors.neutrals["000"],
+                  contrastColor: appConfig.theme.colors.neutrals["050"],
                   mainColor: appConfig.theme.colors.primary[500],
                   mainColorLight: appConfig.theme.colors.primary[400],
                   mainColorStrong: appConfig.theme.colors.primary[600],
@@ -153,7 +157,7 @@ export default function PaginaInicial() {
                   borderRadius: '50%',
                   marginBottom: '16px',
                 }}
-                src={`https://github.com/${username}.png`}
+                src={`https://raw.githubusercontent.com/LJLeandro/imersao-react-matrix-chat/master/images/foto_perfil.jpeg`}
               />
               <Text
                 variant="body4"
