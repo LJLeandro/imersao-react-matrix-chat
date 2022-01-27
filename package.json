@@ -1,0 +1,31 @@
+{
+  "name": "imersao-react-matrix-chat",
+  "version": "1.0.0",
+  "description": "Imersão React da Alura",
+  "main": "./pages/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LJLeandro/imersao-react-matrix-chat.git"
+  },
+  "author": "Lucas Jose Leandro",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LJLeandro/imersao-react-matrix-chat/issues"
+  },
+  "homepage": "https://github.com/LJLeandro/imersao-react-matrix-chat#readme",
+  "dependencies": {
+    "@skynexui/components": "^1.24.2",
+    "next": "^12.0.8",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "scritps": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  }
+}
