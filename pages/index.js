@@ -1,39 +1,9 @@
 import { Box, Button, Text, TextField, Image } from '@skynexui/components';
+import React from 'react';
 import appConfig from '../config.json';
-
-function GlobalStyle() {
-    return (
-        <style global jsx>{`
-            @import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,300,400,700);
+import { useRouter } from 'next/router';
 
 
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-                list-style: none;
-            }
-
-            body h1 {
-                font-family: 'Open Sans', sans-serif;
-            }
-
-            html, body, #__next {
-                min-height: 100vh;
-                display: flex;
-                flex: 1;
-            }
-
-            #__next {
-                flex: 1;
-            }
-
-            #__next > * {
-                flex: 1;
-            }
-        `}</style>
-    );
-}
 
 function Titulo(props){
     const Tag = props.tag || 'h1';
@@ -52,27 +22,16 @@ function Titulo(props){
     );
 }
 
-// function HomePage() {
-//     return (
-//     <div>
-//         <GlobalStyle/>  
-//         <Titulo tag="h2">Boas vindas de volta!</Titulo>
-//         <h2>Discord Alura Matrix</h2>
-
-//         <style jsx>{`
-//             h1 {
-//                 color: red;
-//             }
-//         `}</style>
-//     </div>)
-// }
 
 export default function PaginaInicial() {
-    const username = 'LJ Leandro';
-  
+    const [username, setUsername] = React.useState('LJLeandro');
+    const [userPhotoUrl, setUserPhotoUrl] = React.useState(`https://github.com/${username}.png`);
+    const imageDefault = 'https://i0.wp.com/sociedadejedi.com.br/wp-content/uploads/2020/01/darth-vader-.jpg?resize=700%2C394&ssl=1';
+        
+    const roteamento = useRouter();
+    
     return (
       <>
-        <GlobalStyle />
         <Box
           styleSheet={{
             display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -94,22 +53,30 @@ export default function PaginaInicial() {
               width: '100%', maxWidth: '700px',
               borderRadius: '5px', padding: '32px', margin: '16px',
               boxShadow: '0 2px 10px 0 rgb(0 0 0 / 20%)',
-              backgroundColor: appConfig.theme.colors.neutrals[700],
+              backgroundColor: appConfig.theme.colors.neutrals[600],
             }}
           >
             {/* Formulário */}
             <Box
               as="form"
+              onSubmit={function (infosDoEvento) {
+                infosDoEvento.preventDefault();
+                console.log('Alguém submeteu o form...');
+                // window.location.href='/chat';
+
+                roteamento.push('/chat');
+              }}
               styleSheet={{
                 display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
                 width: { xs: '100%', sm: '50%' }, textAlign: 'center', marginBottom: '32px',
               }}
             >
+
               <Titulo tag="h1">Boas vindas de volta!</Titulo>
               <Text variant="body3" styleSheet={{ marginBottom: '32px', color: appConfig.theme.colors.neutrals[300] }}>
                 {appConfig.name}
               </Text>
-  
+
               <TextField
                 fullWidth
                 textFieldColors={{
@@ -120,6 +87,21 @@ export default function PaginaInicial() {
                     backgroundColor: appConfig.theme.colors.neutrals[800],
                   },
                 }}
+                value={username} 
+                onChange={function (evento) {
+                  const valor = evento.target.value;
+                  setUsername(valor);
+
+                  if (valor.length > 2) {
+                    setUserPhotoUrl(`https://github.com/${username}.png`);
+                  }
+                  else {
+                    setUserPhotoUrl(imageDefault);
+                  }
+
+                  console.log('Usuário digitou...', evento.target.value);
+                }
+              }
               />
               <Button
                 type='submit'
@@ -127,9 +109,9 @@ export default function PaginaInicial() {
                 fullWidth
                 buttonColors={{
                   contrastColor: appConfig.theme.colors.neutrals["050"],
-                  mainColor: appConfig.theme.colors.primary[500],
+                  mainColor: appConfig.theme.colors.primary[900],
                   mainColorLight: appConfig.theme.colors.primary[400],
-                  mainColorStrong: appConfig.theme.colors.primary[600],
+                  mainColorStrong: appConfig.theme.colors.primary[300]
                 }}
               />
             </Box>
@@ -157,7 +139,7 @@ export default function PaginaInicial() {
                   borderRadius: '50%',
                   marginBottom: '16px',
                 }}
-                src={`https://raw.githubusercontent.com/LJLeandro/imersao-react-matrix-chat/master/images/foto_perfil.jpeg`}
+                src={userPhotoUrl}
               />
               <Text
                 variant="body4"
