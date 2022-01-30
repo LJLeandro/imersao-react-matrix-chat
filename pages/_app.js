@@ -9,10 +9,11 @@ function GlobalStyle() {
                 padding: 0;
                 box-sizing: border-box;
                 list-style: none;
+                font-family: 'Open Sans', sans-serif;
             }
 
             body h1 {
-                font-family: 'Open Sans', sans-serif;
+                
             }
 
             html, body, #__next {

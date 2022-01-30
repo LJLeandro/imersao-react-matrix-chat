@@ -88,17 +88,15 @@ export default function PaginaInicial() {
                   },
                 }}
                 value={username} 
-                onChange={function (evento) {
+                onChange={(evento) => {
                   const valor = evento.target.value;
                   setUsername(valor);
 
                   if (valor.length > 2) {
-                    setUserPhotoUrl(`https://github.com/${username}.png`);
+                    setUserPhotoUrl(`https://github.com/${valor}.png`);
                   }
-                  else {
-                    setUserPhotoUrl(imageDefault);
-                  }
-
+                  
+                 
                   console.log('Usuário digitou...', evento.target.value);
                 }
               }
@@ -108,10 +106,11 @@ export default function PaginaInicial() {
                 label='Entrar'
                 fullWidth
                 buttonColors={{
-                  contrastColor: appConfig.theme.colors.neutrals["050"],
-                  mainColor: appConfig.theme.colors.primary[900],
-                  mainColorLight: appConfig.theme.colors.primary[400],
-                  mainColorStrong: appConfig.theme.colors.primary[300]
+                  background: "#142d69"
+                  // contrastColor: appConfig.theme.colors.neutrals["050"],
+                  // mainColor: appConfig.theme.colors.primary[900],
+                  // mainColorLight: appConfig.theme.colors.primary[400],
+                  // mainColorStrong: appConfig.theme.colors.primary[300]
                 }}
               />
             </Box>
