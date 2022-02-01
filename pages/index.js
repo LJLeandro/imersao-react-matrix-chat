@@ -4,7 +4,6 @@ import appConfig from '../config.json';
 import { useRouter } from 'next/router';
 
 
-
 function Titulo(props){
     const Tag = props.tag || 'h1';
     
@@ -22,12 +21,11 @@ function Titulo(props){
     );
 }
 
-
 export default function PaginaInicial() {
     const [username, setUsername] = React.useState('LJLeandro');
     const [userPhotoUrl, setUserPhotoUrl] = React.useState(`https://github.com/${username}.png`);
-    const imageDefault = 'https://i0.wp.com/sociedadejedi.com.br/wp-content/uploads/2020/01/darth-vader-.jpg?resize=700%2C394&ssl=1';
-        
+
+  
     const roteamento = useRouter();
     
     return (
@@ -64,7 +62,7 @@ export default function PaginaInicial() {
                 console.log('Alguém submeteu o form...');
                 // window.location.href='/chat';
 
-                roteamento.push('/chat');
+                roteamento.push(`/chat?username=${username}`);
               }}
               styleSheet={{
                 display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
