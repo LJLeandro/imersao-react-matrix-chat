@@ -3,11 +3,21 @@ import { createClient } from '@supabase/supabase-js';
 import React from 'react';
 import appConfig from '../config.json';
 import { useRouter } from 'next/router';
-
+import { ButtonSendSticker } from '../src/components/ButtonSendSticker';
 
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MzUwNTgyMiwiZXhwIjoxOTU5MDgxODIyfQ._T7TOw7M5tHt1Dfg04TdNpdzu9Wiz0TlVOWzGY9Zh40';
 const SUPABASE_URL = 'https://jifhwjmdpjgjghurggqd.supabase.co'
 const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+function escutaMensagensEmTempoReal(adicionaMensagem) {
+    return supabaseClient
+        .from('mensagens')
+        .on('INSERT', (respostaLive) => {
+            console.log('Houve uma nova mensagem');
+            adicionaMensagem(respostaLive.new);
+        })
+        .subscribe();
+}
 
 export default function ChatPage() {
     
@@ -26,10 +36,18 @@ export default function ChatPage() {
             .select('*')
             .order('id', { ascending: false})
             .then(({ data }) => {
-                console.log(data);
                 setListaDeMensagens(data);
-            }, []);
-    });
+            });
+
+        escutaMensagensEmTempoReal((novaMensagem) => {
+            setListaDeMensagens((valorAtualDaLista) => {
+                return [
+                    novaMensagem, 
+                    ...valorAtualDaLista
+                ]
+            });
+        });
+    }, []);
 
     function handleNovaMensagem(novaMensagem) {
         const dataHora = new Date();
@@ -43,10 +61,8 @@ export default function ChatPage() {
         supabaseClient
             .from('mensagens')
             .insert([mensagem])
-            .then(({ data }) => {
-                console.log('Criando mensagem: ', data);
-                setListaDeMensagens([data[0], 
-                    ...listaDeMensagens]);
+            .then(( { data }) => {
+                console.log("Criando Nova Mensagem.")
             });
         
         setMensagem('');
@@ -129,7 +145,11 @@ export default function ChatPage() {
                                 color: appConfig.theme.colors.neutrals[200],
                             }}
                         />
-
+                        {/* CallBack */}
+                        <ButtonSendSticker
+                            onStickerClick={(sticker) => {
+                                handleNovaMensagem(':sticker:' + sticker);
+                            }} />
                         <Button
                             label="OK"
                             onClick={() => {
@@ -230,7 +250,15 @@ function MessageList(props) {
                                 { mensagem.dataHora }
                             </Text>
                         </Box>
-                        {mensagem.texto}
+                        {mensagem.texto.startsWith(':sticker:')
+                            ? (
+                                <Image src={mensagem.texto.replace(':sticker:', '')} />
+                            ) : (
+                                mensagem.texto
+                            )}
+
+
+                        {/* {mensagem.texto} */}
                     </Text>)
             })}
             
